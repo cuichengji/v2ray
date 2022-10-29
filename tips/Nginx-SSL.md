@@ -1,24 +1,24 @@
 # Nginx : インストール
-'''
-[1]	Nginx をインストールします。
-root@www:~# apt -y install nginx
+```
+Nginx をインストールします。
+~# apt -y install nginx
 
-[2]	Nginx の基本設定です。
+Nginx の基本設定です。
 root@www:~# vi /etc/nginx/sites-available/default
 46行目：サーバー名変更
 server_name www.srv.world;
-root@www:~# systemctl restart nginx
-'''
+~# systemctl restart nginx
+```
 
 # UFW
-'''
+```
 ufw allow 80
 ufw allow 443
-'''
+```
 
 # SSL証明書を取得する (Let's Encrypt)
-'''
-[1]	証明書を取得するためのクライアントツールをインストールします。
+```
+証明書を取得するためのクライアントツールをインストールします。
 root@dlp:~# apt -y install certbot
 
  [--webroot] 指定で稼働中 Web サーバーの公開ディレクトリ配下を認証用の一時領域に使用
@@ -67,7 +67,7 @@ IMPORTANT NOTES:
  privkey.pem    ⇒ 公開鍵に対する秘密鍵
 
 
-[3]	作業を実施するサーバーで Webサーバーが稼働していない場合でも、ツールの簡易 Webサーバー機能を使用して証明書の取得が可能です。 いずれにしろ、インターネット側から当作業を実施するサーバーの 80 ポート宛てにアクセス可能であることは前提となります。
+作業を実施するサーバーで Webサーバーが稼働していない場合でも、ツールの簡易 Webサーバー機能を使用して証明書の取得が可能です。 いずれにしろ、インターネット側から当作業を実施するサーバーの 80 ポート宛てにアクセス可能であることは前提となります。
 
  [--standalone] 指定で 簡易 Webサーバー機能を使用
  -d [証明書を取得したいFQDN]
@@ -96,7 +96,7 @@ IMPORTANT NOTES:
    Donating to EFF:                    https://eff.org/donate-le
 
 
-[4]	取得済みの証明書を更新する場合は以下のように実行します。
+取得済みの証明書を更新する場合は以下のように実行します。
  有効期限が 30日未満の証明書を全て更新
  有効期限の残り日数に関わらず更新したい場合は [--force-renewal] を合わせて指定
 root@dlp:~# certbot renew
@@ -107,12 +107,12 @@ cron でスケジュール実行を設定
 
 vi crontab
 0 0,12 * * * certbot renew --force-renewal
-'''
+```
  
 
 # Nginx : SSL/TLS の設定
 
-'''
+```
 [2]	Nginx の設定です。
 root@www:~# vi /etc/nginx/sites-available/default
 # 最終行に追記
@@ -146,4 +146,4 @@ server {
         return 301 https://$host$request_uri;
 
 root@www:~# systemctl restart nginx
-'''
+```
