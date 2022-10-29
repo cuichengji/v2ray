@@ -5,7 +5,7 @@ root@www:~# apt -y install nginx
 
 [2]	Nginx の基本設定です。
 root@www:~# vi /etc/nginx/sites-available/default
-# 46行目：サーバー名変更
+46行目：サーバー名変更
 server_name www.srv.world;
 root@www:~# systemctl restart nginx
 '''
@@ -100,8 +100,15 @@ IMPORTANT NOTES:
  有効期限が 30日未満の証明書を全て更新
  有効期限の残り日数に関わらず更新したい場合は [--force-renewal] を合わせて指定
 root@dlp:~# certbot renew
-'''
 
+cron でスケジュール実行を設定
+ テスト：certbot renew --dry-run
+ 
+
+vi crontab
+0 0,12 * * * certbot renew --force-renewal
+'''
+ 
 
 # Nginx : SSL/TLS の設定
 
